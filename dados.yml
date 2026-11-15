@@ -1,0 +1,53 @@
+name: Atualizar dados do SINASC
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["data/**", "LEIA-ME.md"]
+  schedule:
+    - cron: "17 9 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: dados
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências
+        run: pip install datasus-dbc dbfread
+
+      - name: Baixar e organizar os dados
+        id: dados
+        continue-on-error: true
+        run: |
+          mkdir -p data
+          python atualizar_dados.py
+
+      - name: Salvar no repositório
+        run: |
+          date -u +"%Y-%m-%d %H:%M UTC" > data/ultima-verificacao.txt
+          git config user.name "atualizador-de-dados"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/
+          git commit -m "Atualiza dados do SINASC" || echo "Nada mudou."
+          git pull --rebase --autostash || true
+          git push
+
+      - name: Avisar se o DATASUS falhou
+        if: steps.dados.outcome == 'failure'
+        run: |
+          echo "::error::Não foi possível atualizar os dados do DATASUS. O site segue com os últimos dados bons."
+          exit 1

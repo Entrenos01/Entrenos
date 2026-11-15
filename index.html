@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EntreNós · Prevenção da gravidez na adolescência</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FFFBF0">
+<link rel="icon" type="image/png" href="icone-192.png">
+<link rel="apple-touch-icon" href="icone-apple.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="EntreNós">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFBF0;--ink:#1F2A37;--muted:#5B6472;--soft:#8C94A1;
+    --verde:#2F4B7C;--verde-esc:#1F3357;--menta:#F2C94C;--nevoa:#FFF3CC;--ambar:#D94A4A;--certo:#2E9E5B;--errado:#D94A4A;--ouro:#E0A21A;
+    --glass:rgba(255,255,255,.56);--edge:rgba(255,255,255,.9);
+    --sombra:0 1px 0 rgba(255,255,255,.95) inset,0 24px 48px -28px rgba(31,42,55,.38);
+    --serif:Fraunces,Georgia,serif;--sans:Manrope,system-ui,sans-serif;
+    --curva:cubic-bezier(.2,.8,.2,1);
+  }
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  button{font-family:var(--sans)}
+
+  /* fundo: manchas desfocadas + granulado */
+  .fundo{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:radial-gradient(120% 55% at 50% -12%,#FFE7A0 0%,rgba(255,231,160,0) 62%),var(--bg)}
+  .fundo::after{content:"";position:absolute;inset:0;opacity:.09;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+
+  .pagina{max-width:760px;margin:auto;padding:0 18px 110px}
+  .sec{display:none}
+  .sec.on{display:block}
+  .sec.on .rev{animation:subir .8s var(--curva) both;animation-delay:calc(var(--d,0) * 70ms)}
+  @keyframes subir{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+  .vidro{background:#FFFFFF;border:1px solid rgba(31,42,55,.11);border-radius:14px;box-shadow:0 1px 2px rgba(31,42,55,.05)}
+  .rotulo{font:700 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--verde)}
+
+  /* ===== INÍCIO ===== */
+  .marca{display:flex;align-items:center;justify-content:space-between;padding:22px 2px 0}
+  .marca .logo{font:600 19px var(--serif);letter-spacing:-.02em}
+  .marca .logo svg{width:30px;height:30px}
+  .marca .oficial{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:7px}
+  .marca .oficial i{width:7px;height:7px;border-radius:50%;background:var(--verde);box-shadow:0 0 0 4px rgba(47,75,124,.16);animation:respira 2.4s ease-in-out infinite}
+  @keyframes respira{50%{box-shadow:0 0 0 7px rgba(47,75,124,.05)}}
+
+  .hero{padding:46px 2px 26px}
+  .hero h1{font:500 clamp(40px,11vw,64px)/.98 var(--serif);letter-spacing:-.035em;margin:16px 0 0}
+  .hero h1 em{font-style:italic;color:var(--ouro)}
+  .hero h1 .l{display:block;overflow:hidden;padding:.02em 0 .2em;margin-bottom:-.16em}
+  .hero h1 .l span{display:inline-block;animation:linha 1s var(--curva) both;animation-delay:calc(var(--d) * 110ms + 100ms)}
+  @keyframes linha{from{transform:translateY(105%)}to{transform:none}}
+  .hero p{font-size:16.5px;color:var(--muted);max-width:30em;margin-top:14px}
+  .hero h1.nome{font-size:clamp(68px,20vw,112px);line-height:.95;letter-spacing:-.05em}
+  .hero h1.nome em{margin-left:.02em}
+  .hero h1.nome .l:nth-child(2){padding-left:.9em}
+  .hero .sub{font:600 13px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin-top:22px;display:flex;align-items:center;gap:12px}
+  .hero .sub::before{content:"";width:28px;height:1.5px;background:var(--verde);flex:none}
+
+  .destaque{display:grid;grid-template-columns:1.35fr 1fr;margin-top:6px;overflow:hidden}
+  .destaque .grande{padding:22px 22px 20px}
+  .destaque .grande b{display:block;font:600 clamp(40px,10vw,56px)/1 var(--serif);letter-spacing:-.04em;color:var(--verde-esc);font-variant-numeric:tabular-nums}
+  .destaque .grande span{display:block;font-size:14px;color:var(--muted);margin-top:8px;max-width:17em}
+  .destaque .grande small{display:block;font-size:11px;color:var(--soft);margin-top:12px}
+  .destaque .lado{border-left:1px solid rgba(31,42,55,.08);display:grid}
+  .destaque .lado div{padding:16px 18px;display:flex;flex-direction:column;justify-content:center}
+  .destaque .lado div+div{border-top:1px solid rgba(31,42,55,.08)}
+  .destaque .lado b{font:600 30px/1 var(--serif);color:var(--ink)}
+  .destaque .lado span{font-size:12.5px;color:var(--muted);margin-top:4px}
+
+  .titulo-bloco{display:flex;justify-content:space-between;align-items:baseline;margin:38px 2px 14px}
+  .titulo-bloco h2{font:500 26px/1.1 var(--serif);letter-spacing:-.02em}
+  .titulo-bloco span{font-size:12px;color:var(--soft)}
+
+  .bento{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .card{position:relative;display:block;text-decoration:none;padding:20px;overflow:hidden;transition:transform .45s var(--curva),box-shadow .45s var(--curva),border-color .3s}
+  .card:hover{transform:translateY(-2px);border-color:rgba(47,75,124,.35);box-shadow:0 8px 20px -14px rgba(31,42,55,.35)}
+  .card:active{transform:scale(.985)}
+  .card .num{font:600 12px var(--sans);color:var(--soft);letter-spacing:.06em}
+  .card h3{font:500 23px/1.1 var(--serif);letter-spacing:-.02em;margin-top:10px}
+  .card p{font-size:13.5px;color:var(--muted);margin-top:6px;max-width:20em}
+  .card .ir{position:absolute;right:18px;top:20px;display:grid;place-items:center;transition:transform .45s var(--curva)}
+  .card .ir svg{width:18px;height:18px;stroke:var(--verde)}
+  .card:hover .ir{transform:translateX(3px)}
+  .c-dados{grid-column:span 2;display:grid;grid-template-columns:1fr 1.1fr;gap:6px;min-height:230px}
+  .c-dados .minimapa{width:100%;align-self:center;margin-right:-10px}
+  .c-dados .minimapa path{fill:#F6E7B8;stroke:rgba(255,255,255,.95);stroke-width:1.4;transition:fill .7s}
+  .c-dados .minimapa path.aceso{fill:#F2A65A}
+  .c-dados .minimapa path.aceso2{fill:#2F4B7C}
+  .c-quiz .moeda{display:flex;margin-top:22px;border-radius:9px;background:rgba(31,42,55,.06);padding:4px;font:700 12px var(--sans)}
+  .c-quiz .moeda span{flex:1;text-align:center;padding:9px 0;border-radius:7px;color:var(--muted)}
+  .c-quiz .moeda span.at{background:#fff;color:var(--verde);box-shadow:0 4px 12px -6px rgba(31,42,55,.35);animation:troca 4s var(--curva) infinite}
+  .c-quiz .moeda span:first-child{animation:troca2 4s var(--curva) infinite}
+  @keyframes troca{0%,45%{background:#fff;color:var(--verde)}50%,95%{background:transparent;color:var(--muted);box-shadow:none}}
+  @keyframes troca2{0%,45%{background:transparent;color:var(--muted)}50%,95%{background:#fff;color:var(--verde);box-shadow:0 4px 12px -6px rgba(31,42,55,.35)}}
+  .c-metodos .pilha{margin-top:18px;display:grid;gap:6px}
+  .c-metodos .pilha span{font:600 12px var(--sans);padding:7px 10px;border-radius:7px;background:var(--bg);border:1px solid rgba(31,42,55,.12);color:var(--ink);width:fit-content}
+  .c-metodos .pilha span:nth-child(2){margin-left:14px}.c-metodos .pilha span:nth-child(3){margin-left:28px;color:var(--verde)}
+  .c-ajuda{grid-column:span 2;display:flex;align-items:center;gap:16px;padding:16px 20px}
+  .c-ajuda .ic{width:44px;height:44px;flex:none;border-radius:10px;display:grid;place-items:center;background:var(--nevoa)}
+  .c-ajuda .ic svg{width:20px;height:20px;stroke:var(--verde)}
+  .c-ajuda h3{font-size:19px;margin:0}.c-ajuda p{margin-top:2px}
+  .c-ajuda .ir{position:static;margin-left:auto;flex:none}
+
+  .rodape{margin:34px 2px 0;padding-top:18px;border-top:1px solid rgba(31,42,55,.1);font-size:12px;color:var(--soft);display:flex;gap:10px;align-items:flex-start}
+  .rodape svg{width:16px;height:16px;flex:none;stroke:var(--verde);margin-top:1px}
+
+  /* ===== SEÇÕES ===== */
+  .barra{position:sticky;top:10px;z-index:5;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;margin:12px 0 0;padding:8px 10px 8px 8px;border-radius:18px}
+  .voltar{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.75);border:1px solid var(--edge);transition:background .3s,transform .4s var(--curva)}
+  .voltar svg{width:16px;height:16px;stroke:var(--ink)}
+  .voltar:hover{background:#fff;transform:translateX(-2px)}
+  .barra .onde{font:700 13px var(--sans)}
+  .barra .onde small{display:block;font:500 11px var(--sans);color:var(--soft)}
+  .barra .contador{font:600 12px var(--sans);color:var(--soft);font-variant-numeric:tabular-nums;padding-right:6px}
+  .barra .linha{grid-column:1/-1;height:2px;border-radius:2px;background:rgba(31,42,55,.08);overflow:hidden;margin-top:2px}
+  .barra .linha i{display:block;height:100%;background:var(--verde);border-radius:2px;transition:width .6s var(--curva)}
+
+  .topo{padding:30px 2px 18px}
+  .topo h2{font:500 clamp(32px,8vw,42px)/1.02 var(--serif);letter-spacing:-.03em;margin:12px 0 10px}
+  .topo h2 em{font-style:normal;color:inherit}
+  .topo p{color:var(--muted);font-size:15.5px;max-width:32em}
+
+  .box{padding:20px}
+  .aviso{border-left:2px solid var(--verde);background:rgba(47,75,124,.06);color:#1F3357;padding:10px 14px;font-size:13.5px;margin-bottom:14px;border-radius:0 8px 8px 0}
+
+  #mapa-svg{width:100%;max-width:540px;display:block;margin:0 auto 6px;overflow:visible}
+  .est path{stroke:#FFFBF0;stroke-width:1.2;stroke-linejoin:round;cursor:pointer;transform-box:fill-box;transform-origin:center;transition:fill .35s,filter .3s,transform .35s var(--curva)}
+  .est:hover path{filter:brightness(1.08)}
+  .est.sel path{fill:#2F4B7C!important;stroke:#1F3357;stroke-width:1.4;transform:scale(1.07);animation:pulsar .7s cubic-bezier(.3,1.6,.5,1);filter:drop-shadow(0 4px 8px rgba(31,51,87,.4))}
+  .est.sel text{fill:#fff;opacity:1}
+  @keyframes pulsar{0%{transform:scale(1)}35%{transform:scale(1.16)}60%{transform:scale(1.03)}80%{transform:scale(1.09)}100%{transform:scale(1.07)}}
+  .onda{fill:none!important;stroke:#2F4B7C!important;stroke-width:1.6!important;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:onda .8s ease-out forwards}
+  @keyframes onda{from{transform:scale(1.05);opacity:.9}to{transform:scale(1.45);opacity:0}}
+  .est text{font:700 7px var(--sans);fill:#1F2A37;opacity:.75;pointer-events:none;text-anchor:middle;dominant-baseline:middle}
+  .est.peq text{font-size:5px}
+  .leg{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:12px;color:var(--muted);margin-bottom:16px}
+  .leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .painel-uf{font:500 24px var(--serif);letter-spacing:-.02em}
+  .nums{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .nums>div{background:var(--nevoa);border-radius:10px;padding:14px}
+  .nums b{display:block;font:600 32px/1.05 var(--serif);letter-spacing:-.03em;color:var(--verde-esc)}
+  .nums span{font-size:12.5px;color:var(--muted)}
+  .fonte{font-size:12px;color:var(--soft);margin-top:12px}
+
+  .prog{display:flex;justify-content:space-between;font:600 12px var(--sans);color:var(--soft)}
+  .pontos{display:flex;gap:4px;margin-top:8px}
+  .pontos i{flex:1;height:4px;border-radius:4px;background:rgba(31,42,55,.08);transition:background .4s}
+  .pontos i.f{background:var(--certo)}.pontos i.e{background:var(--errado)}.pontos i.a{background:var(--menta)}
+  .frase{font:500 25px/1.25 var(--serif);letter-spacing:-.02em;margin:22px 0 22px}
+  .duo{display:grid;grid-template-columns:1fr 1fr;background:rgba(31,42,55,.06);border-radius:10px;padding:3px}
+  .duo button{padding:14px;font:700 15px var(--sans);background:none;border:0;border-radius:8px;cursor:pointer;color:var(--ink);transition:background .3s,color .3s,transform .3s var(--curva)}
+  .duo button:hover:not(:disabled){background:rgba(255,255,255,.75)}
+  .duo button:active:not(:disabled){transform:scale(.97)}
+  .duo button.ok{background:var(--certo);color:#fff}.duo button.no{background:var(--errado);color:#fff}
+  .resp{margin-top:18px;display:none}.resp.on{display:block;animation:subir .5s var(--curva)}
+  .resp strong{color:var(--certo)}.resp.err strong{color:#D94A4A}
+  .link{background:none;border:0;color:var(--verde);font:700 15px var(--sans);padding:2px 0;margin-top:16px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+  .link::after{content:"→";transition:transform .3s var(--curva)}.link:hover::after{transform:translateX(4px)}
+
+  .lista{padding:4px 20px}
+  details{border-bottom:1px solid rgba(31,42,55,.08);padding:16px 0}details:last-child{border:0}
+  summary{cursor:pointer;font:600 16px var(--sans);list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--verde);border-bottom:2px solid var(--verde);transform:rotate(45deg);transition:transform .35s var(--curva)}
+  details[open] summary::after{transform:rotate(-135deg)}
+  details[open]>:not(summary){animation:subir .45s var(--curva)}
+  dl{display:grid;grid-template-columns:110px 1fr;gap:6px 12px;margin-top:10px;font-size:14px}
+  dt{color:var(--muted)}.ist{color:var(--verde);font-weight:700}
+
+
+  .ajuda{padding:4px 20px}.ajuda>div{padding:16px 0;border-bottom:1px solid rgba(31,42,55,.08)}.ajuda>div:last-child{border:0}
+  .ajuda h3{font:600 16px var(--sans);margin-bottom:2px}.ajuda p{color:var(--muted);font-size:14.5px}
+  .fontes{margin-top:22px}.fontes h3{font:500 20px var(--serif);margin-bottom:6px}
+  .fontes a{color:var(--verde);font-size:13px;display:block;margin-top:8px;text-decoration:none}
+
+  /* doca de navegação: só ícones, o ativo mostra o nome */
+  .doca{position:fixed;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,1fr);padding:6px 6px calc(8px + env(safe-area-inset-bottom));background:rgba(255,251,240,.97);border-top:1px solid rgba(31,42,55,.12);transform:translateY(100%);transition:transform .6s var(--curva);z-index:9}
+  .doca.vis{transform:none}
+  .doca a{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 4px;text-decoration:none;color:var(--soft);font:600 11px var(--sans);transition:color .3s}
+  .doca a svg{width:20px;height:20px;stroke:currentColor}
+  .doca a::before{content:"";position:absolute;top:-7px;left:50%;width:0;height:2px;background:var(--verde);transform:translateX(-50%);transition:width .4s var(--curva)}
+  .doca a:hover{color:var(--ink)}
+  .doca a.on{color:var(--verde)}
+  .doca a.on::before{width:28px}
+  svg.i{fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="fundo"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-volta" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-casa" viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5V19a1 1 0 0 1-1 1h-4.5v-5h-5v5H5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-mapa" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-quiz" viewBox="0 0 24 24"><path d="M9.2 9a2.9 2.9 0 1 1 4 2.7c-.8.4-1.2 1-1.2 1.8v.5"/><circle cx="12" cy="17.6" r=".6"/><rect x="3.5" y="3.5" width="17" height="17" rx="5"/></symbol>
+  <symbol id="i-metodo" viewBox="0 0 24 24"><path d="M12 3.5l7 2.8v5.4c0 4.4-3 7.6-7 8.8-4-1.2-7-4.4-7-8.8V6.3z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+    <symbol id="i-ajuda" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+  <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M12 3.5l7 2.8v5.4c0 4.4-3 7.6-7 8.8-4-1.2-7-4.4-7-8.8V6.3z"/></symbol>
+</svg>
+
+<div class="pagina">
+
+  <!-- INÍCIO -->
+  <section class="sec" id="inicio">
+    <div class="marca rev">
+      <div class="logo">
+        EntreNós
+      </div>
+      <div class="oficial"><i></i>Dados oficiais · SUS</div>
+    </div>
+
+    <div class="hero">
+      <span class="rotulo rev" style="--d:0">Saúde do adolescente · Dados oficiais</span>
+      <h1 class="nome" aria-label="EntreNós">
+        <span class="l"><span style="--d:1">Entre<em>Nós</em></span></span>
+      </h1>
+      <p class="sub rev" style="--d:4">Prevenção da gravidez na adolescência</p>
+      <p class="rev" style="--d:5">Dados oficiais do Brasil, métodos gratuitos no SUS e onde buscar atendimento.</p>
+    </div>
+
+    <div class="destaque vidro rev" style="--d:6">
+      <div class="grande">
+        <b id="cont">0</b>
+        <span id="cont-txt">bebês nasceram de mães de até 19 anos no Brasil em 2024</span>
+        <small id="cont-fonte">SINASC · Ministério da Saúde · dado preliminar</small>
+      </div>
+      <div class="lado">
+        <div><b id="n-metodos">7</b><span>métodos gratuitos no SUS</span></div>
+        <div><b>27</b><span>estados com dados oficiais</span></div>
+      </div>
+    </div>
+
+    <div class="titulo-bloco rev" style="--d:7"><h2>Explore</h2><span>4 seções</span></div>
+
+    <div class="bento">
+      <a href="#mapa" class="card c-dados vidro rev" style="--d:8">
+        <div>
+          <span class="num">01</span>
+          <h3>Dados do seu estado</h3>
+          <p>Os números oficiais de nascimentos de mães adolescentes, estado por estado.</p>
+        </div>
+        <svg class="minimapa" id="minimapa" viewBox="92 40 456 418" aria-hidden="true"></svg>
+        <span class="ir"><svg class="i"><use href="#i-seta"/></svg></span>
+      </a>
+      <a href="#quiz" class="card c-quiz vidro rev" style="--d:9">
+        <span class="num">02</span>
+        <h3>Mito ou verdade</h3>
+        <p id="q-desc">8 perguntas rápidas.</p>
+        <div class="moeda"><span>Mito</span><span class="at">Verdade</span></div>
+        <span class="ir"><svg class="i"><use href="#i-seta"/></svg></span>
+      </a>
+      <a href="#metodos" class="card c-metodos vidro rev" style="--d:10">
+        <span class="num">03</span>
+        <h3>Métodos</h3>
+        <p>Como funciona e como conseguir.</p>
+        <div class="pilha"><span>Camisinha</span><span>Implante</span><span>DIU de cobre</span></div>
+        <span class="ir"><svg class="i"><use href="#i-seta"/></svg></span>
+      </a>
+      <a href="#ajuda" class="card c-ajuda vidro rev" style="--d:12">
+        <span class="ic"><svg class="i"><use href="#i-ajuda"/></svg></span>
+        <div><span class="num">04</span><h3>Onde buscar ajuda</h3><p>UBS, Disque 100, Conselho Tutelar e seus direitos.</p></div>
+        <span class="ir"><svg class="i"><use href="#i-seta"/></svg></span>
+      </a>
+    </div>
+
+    <div class="rodape rev" style="--d:13">
+      <svg class="i"><use href="#i-escudo"/></svg>
+      <span>Conteúdo baseado em notas técnicas do Ministério da Saúde. Números do SINASC, atualizados automaticamente todo mês.</span>
+    </div>
+  </section>
+
+  <!-- DADOS -->
+  <section class="sec" id="mapa" data-n="1" data-nome="Dados" data-sub="Mapa do Brasil">
+    <div class="topo">
+      <span class="rotulo rev">01 · Dados oficiais</span>
+      <h2 class="rev" style="--d:1">Dados do seu <em>estado</em></h2>
+      <p class="rev" style="--d:2">Toque em um estado para ver quantos bebês nasceram de mães adolescentes, segundo o SINASC, o sistema do Ministério da Saúde que registra todos os nascimentos do país.</p>
+    </div>
+    <svg id="mapa-svg" class="rev" style="--d:3" viewBox="92 40 456 418" role="img" aria-label="Mapa do Brasil por estado"></svg>
+    <div class="leg rev" style="--d:4" id="leg"></div>
+    <div class="box vidro rev" style="--d:5" id="painel"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="sec" id="quiz" data-n="2" data-nome="Mito ou verdade" data-sub="Quiz">
+    <div class="topo">
+      <span class="rotulo rev">02 · Quiz</span>
+      <h2 class="rev" style="--d:1">Mito ou <em>verdade?</em></h2>
+      <p class="rev" style="--d:2">Muita coisa que se ouve por aí sobre sexo e gravidez está errada. Responda e veja a explicação de cada uma.</p>
+    </div>
+    <div class="box vidro rev" style="--d:3" id="qbox"></div>
+  </section>
+
+  <!-- MÉTODOS -->
+  <section class="sec" id="metodos" data-n="3" data-nome="Métodos" data-sub="Contraceptivos no SUS">
+    <div class="topo">
+      <span class="rotulo rev">03 · Métodos</span>
+      <h2 class="rev" style="--d:1">Métodos <em>contraceptivos</em></h2>
+      <p class="rev" style="--d:2">Como cada método funciona, quanto protege, quanto tempo dura e como conseguir de graça no SUS.</p>
+    </div>
+    <div class="aviso rev" style="--d:3" id="mdica"></div>
+    <div class="lista vidro rev" style="--d:4" id="mlista"></div>
+  </section>
+
+  <!-- AJUDA -->
+  <section class="sec" id="ajuda" data-n="4" data-nome="Ajuda" data-sub="Contatos e direitos">
+    <div class="topo">
+      <span class="rotulo rev">04 · Ajuda</span>
+      <h2 class="rev" style="--d:1">Onde buscar <em>ajuda</em></h2>
+      <p class="rev" style="--d:2">Para onde ir, quem procurar e quais são os seus direitos no atendimento de saúde.</p>
+    </div>
+    <div class="ajuda vidro rev" style="--d:3" id="alista"></div>
+    <div class="fontes rev" style="--d:4"><h3>Fontes</h3><div id="flista"></div></div>
+  </section>
+</div>
+
+<nav class="doca" id="doca" aria-label="Seções">
+  <a href="#inicio"><svg class="i"><use href="#i-casa"/></svg><span>Início</span></a>
+  <a href="#mapa"><svg class="i"><use href="#i-mapa"/></svg><span>Dados</span></a>
+  <a href="#quiz"><svg class="i"><use href="#i-quiz"/></svg><span>Quiz</span></a>
+  <a href="#metodos"><svg class="i"><use href="#i-metodo"/></svg><span>Métodos</span></a>
+    <a href="#ajuda"><svg class="i"><use href="#i-ajuda"/></svg><span>Ajuda</span></a>
+</nav>
+
+<script>
+window.__CONTEUDO = {"aviso_revisao": "Conteúdo de saúde: antes de publicar, alguém do grupo (ou um professor) confere cada item com as fontes listadas. Números de eficácia variam um pouco entre fontes.", "mitos_verdades": [{"frase": "Dá para engravidar na primeira relação sexual.", "verdade": true, "explicacao": "Sim. Se houver ovulação, a gravidez pode acontecer já na primeira vez. Não existe 'primeira vez protegida'."}, {"frase": "Tirar antes de terminar (coito interrompido) evita gravidez.", "verdade": false, "explicacao": "Não é um método seguro. Pode sair líquido com espermatozoides antes da ejaculação, e o método falha muito na prática."}, {"frase": "Usar duas camisinhas ao mesmo tempo protege mais.", "verdade": false, "explicacao": "Pelo contrário: o atrito entre elas aumenta a chance de rasgar. Use uma só, do jeito certo."}, {"frase": "A pílula do dia seguinte pode ser usada como método de rotina.", "verdade": false, "explicacao": "Ela é para emergência (camisinha rompeu, relação sem proteção). Funciona melhor quanto antes for tomada e protege menos que os métodos de uso regular."}, {"frase": "A camisinha é o único método que também protege contra ISTs.", "verdade": true, "explicacao": "Camisinha masculina e feminina previnem gravidez e infecções sexualmente transmissíveis. Os outros métodos só previnem gravidez, então o ideal é combinar com a camisinha."}, {"frase": "Adolescente precisa levar os pais para ser atendido na UBS.", "verdade": false, "explicacao": "Adolescentes têm direito a atendimento em saúde com privacidade e sigilo, garantido pelo Estatuto da Criança e do Adolescente. A equipe pode envolver a família quando necessário, mas a ausência dos pais não impede o atendimento."}, {"frase": "O SUS oferece métodos contraceptivos de graça, inclusive para adolescentes.", "verdade": true, "explicacao": "Camisinhas, pílulas, injetáveis, DIU de cobre e, desde 2025, o implante subdérmico para adolescentes de 14 a 17 anos estão no SUS. A oferta do implante ainda está chegando aos municípios aos poucos."}, {"frase": "Não dá para engravidar durante a menstruação.", "verdade": false, "explicacao": "É menos provável, mas pode acontecer, principalmente quando o ciclo é irregular, o que é comum na adolescência. Espermatozoides podem sobreviver alguns dias no corpo."}], "metodos": [{"id": "camisinha-masculina", "nome": "Camisinha masculina", "como_funciona": "Barreira que impede o contato do sêmen com a vagina. Usada em toda relação, do começo ao fim.", "protege_ist": true, "eficacia_uso_tipico": "cerca de 87%", "duracao": "uma relação", "no_sus": "Sim, de graça e sem receita na UBS e em vários serviços de saúde."}, {"id": "camisinha-feminina", "nome": "Camisinha feminina", "como_funciona": "Barreira colocada dentro da vagina antes da relação.", "protege_ist": true, "eficacia_uso_tipico": "cerca de 79%", "duracao": "uma relação", "no_sus": "Sim, de graça na UBS."}, {"id": "pilula", "nome": "Pílula anticoncepcional", "como_funciona": "Hormônios que impedem a ovulação. Tomada todo dia, no mesmo horário.", "protege_ist": false, "eficacia_uso_tipico": "cerca de 93%", "duracao": "precisa tomar todo dia", "no_sus": "Sim, com orientação da equipe de saúde."}, {"id": "injetavel", "nome": "Injeção anticoncepcional", "como_funciona": "Hormônio aplicado por injeção, mensal ou a cada três meses.", "protege_ist": false, "eficacia_uso_tipico": "cerca de 96%", "duracao": "1 ou 3 meses", "no_sus": "Sim, mensal e trimestral."}, {"id": "diu-cobre", "nome": "DIU de cobre", "como_funciona": "Pequena peça colocada dentro do útero por profissional de saúde. Sem hormônio.", "protege_ist": false, "eficacia_uso_tipico": "mais de 99%", "duracao": "até 10 anos", "no_sus": "Sim, inserido na UBS ou em serviço de referência."}, {"id": "implante", "nome": "Implante subdérmico", "como_funciona": "Bastão pequeno e flexível colocado sob a pele do braço, que libera hormônio aos poucos.", "protege_ist": false, "eficacia_uso_tipico": "mais de 99%", "duracao": "até 3 anos", "no_sus": "Sim, incorporado em 2025 para adolescentes de 14 a 17 anos e mulheres de 18 a 49. A oferta está chegando aos municípios aos poucos: pergunte na sua UBS."}, {"id": "emergencia", "nome": "Pílula de emergência", "como_funciona": "Usada só depois de uma relação sem proteção ou se a camisinha romper. Quanto antes, melhor.", "protege_ist": false, "eficacia_uso_tipico": "menor que a dos métodos regulares; cai com o tempo após a relação", "duracao": "uso de emergência", "no_sus": "Sim, na UBS."}], "metodos_dica": "O mais seguro é combinar a camisinha (protege de ISTs) com um método de longa duração ou de uso regular.", "ajuda": [{"titulo": "Unidade Básica de Saúde (UBS)", "texto": "Orientação, métodos contraceptivos, teste de gravidez e pré-natal, de graça e com sigilo."}, {"titulo": "Disque 100", "texto": "Para denunciar violência sexual contra crianças e adolescentes. Ligação gratuita, 24 horas, pode ser anônima."}, {"titulo": "Conselho Tutelar", "texto": "Órgão do seu município que protege os direitos de crianças e adolescentes."}, {"titulo": "Seus direitos", "texto": "O Estatuto da Criança e do Adolescente garante acesso à saúde, privacidade e sigilo no atendimento."}], "fontes": [{"titulo": "Nota Técnica nº 2/2025 – COSAJ/CGCRIAJ/DGCI/SAPS/MS (Semana Nacional de Prevenção da Gravidez na Adolescência)", "url": "https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/notas-tecnicas/2025/nota-tecnica-no-2-2025-cosaj-cgcriaj-dgci-saps-ms/view"}, {"titulo": "Nota Técnica Conjunta nº 156/2025 – implante subdérmico de etonogestrel no SUS", "url": "https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/notas-tecnicas/2025/nota-tecnica-conjunta-no-156-2025.pdf"}, {"titulo": "Nota Técnica Conjunta nº 52/2026 – ampliação da oferta de métodos contraceptivos", "url": "https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/notas-tecnicas/2026/nota-tecnica-conjunta-no-52-2026-cgesmu-cgcriaj-dgci-saps-e-dahud-saes-ms.pdf/@@download/file"}, {"titulo": "SINASC – Ministério da Saúde / DATASUS", "url": "https://datasus.saude.gov.br/"}]};
+window.__MAPA = {"RR": {"d": "M209,77 218,76 222,79 222,85 227,89 222,99 234,115 241,106 248,105 254,97 267,98 270,87 261,87 260,83 254,79 253,46 249,46 243,55 226,59 226,61 214,61 205,56 208,59Z", "cx": 237.8, "cy": 79.4}, "AP": {"d": "M316,77 340,78 352,57 358,79 369,83 367,95 353,105 351,114 347,114 325,85 316,84Z", "cx": 345.6, "cy": 87.0}, "AM": {"d": "M209,77 218,76 222,79 222,85 227,89 222,99 234,115 241,106 248,105 254,97 267,98 276,114 299,122 272,170 277,179 270,194 238,194 234,194 225,184 216,184 194,197 190,202 175,204 103,176 103,162 107,161 108,154 113,154 115,150 123,150 126,145 139,145 145,130 144,105 139,100 139,95 143,95 144,82 170,80 170,86 175,91 193,91 208,86Z", "cx": 200.8, "cy": 144.0}, "PA": {"d": "M316,77 303,77 300,84 270,87 267,98 276,114 299,122 272,170 277,179 286,195 364,204 378,188 390,162 390,155 393,149 406,139 413,116 409,110 386,110 386,105 368,102 367,95 353,105 351,114 347,114 325,85 316,84Z", "cx": 334.5, "cy": 142.9}, "MA": {"d": "M413,116 419,116 432,122 436,128 447,128 463,133 451,151 450,170 435,173 420,186 416,195 416,209 413,210 405,201 405,191 410,190 411,187 399,181 398,158 390,155 393,149 406,139Z", "cx": 423.1, "cy": 154.5}, "PI": {"d": "M463,133 471,134 479,181 479,187 472,195 463,201 439,201 442,208 430,216 427,216 422,209 416,209 416,195 420,186 435,173 450,170 451,151Z", "cx": 450.8, "cy": 178.7}, "CE": {"d": "M471,134 495,139 506,146 511,154 501,169 498,174 502,182 496,187 490,181 479,181Z", "cx": 489.1, "cy": 157.7}, "RN": {"d": "M511,154 525,159 539,159 542,174 525,171 523,176 520,176 518,170 507,172 501,169Z", "cx": 521.4, "cy": 164.7}, "PB": {"d": "M501,169 498,174 502,182 507,186 517,182 521,191 542,184 542,174 525,171 523,176 520,176 518,170 507,172Z", "cx": 520.6, "cy": 178.5}, "AC": {"d": "M103,176 97,176 97,187 101,189 101,194 110,203 117,203 117,208 135,205 136,218 163,218 163,214 168,214 169,210 173,210 175,204Z", "cx": 133.4, "cy": 198.6}, "RO": {"d": "M238,194 234,194 225,184 216,184 194,197 190,202 196,203 196,218 205,228 232,239 250,242 258,225 251,222 255,216 238,215Z", "cx": 223.1, "cy": 213.4}, "TO": {"d": "M390,155 398,158 399,181 411,187 410,190 405,191 405,201 413,210 408,217 413,220 412,234 400,240 388,240 384,236 379,236 373,240 368,237 367,229 360,232 364,204 378,188 390,162Z", "cx": 387.8, "cy": 207.1}, "PE": {"d": "M479,181 490,181 496,187 502,182 507,186 517,182 521,191 542,184 542,193 536,200 519,203 513,198 508,198 503,201 490,194 478,202 472,195 479,187Z", "cx": 506.6, "cy": 191.7}, "AL": {"d": "M536,200 519,203 513,198 508,198 503,201 504,209 508,210 509,214 520,215 526,214 528,209 533,208Z", "cx": 517.1, "cy": 206.2}, "SE": {"d": "M509,214 503,215 503,222 511,227 518,221 520,215Z", "cx": 510.2, "cy": 218.9}, "MT": {"d": "M277,179 286,195 364,204 360,232 359,242 335,270 334,289 327,289 326,282 321,286 312,286 306,281 292,280 283,291 280,280 274,276 273,269 255,269 251,259 254,257 254,248 250,246 250,242 258,225 251,222 255,216 238,215 238,194 270,194Z", "cx": 300.6, "cy": 234.5}, "BA": {"d": "M472,195 463,201 439,201 442,208 430,216 427,216 422,209 416,209 413,210 408,217 413,220 412,234 412,257 413,261 422,261 435,253 438,258 450,258 459,264 469,264 480,274 480,277 472,283 476,293 479,294 486,294 489,276 493,271 494,243 501,241 511,227 503,222 503,215 509,214 508,210 504,209 503,201 490,194 478,202Z", "cx": 461.7, "cy": 233.8}, "GO": {"d": "M360,232 367,229 368,237 373,240 379,236 384,236 388,240 400,240 412,234 412,257 406,257 405,263 401,263 388,261 387,265 389,271 400,271 401,274 395,282 392,294 370,294 359,305 357,305 334,289 335,270 359,242Z", "cx": 371.1, "cy": 266.6}, "DF": {"d": "M401,263 388,261 387,265 389,271 400,271Z", "cx": 393.4, "cy": 265.9}, "MG": {"d": "M412,257 406,257 405,263 401,263 400,271 401,274 395,282 392,294 370,294 359,305 368,306 378,313 396,313 404,329 405,342 419,337 424,338 443,334 455,323 455,316 460,316 466,306 466,294 476,293 472,283 480,277 480,274 469,264 459,264 450,258 438,258 435,253 422,261 413,261Z", "cx": 426.5, "cy": 295.3}, "MS": {"d": "M334,289 327,289 326,282 321,286 312,286 306,281 292,280 283,291 282,331 301,332 311,338 311,349 319,349 336,334 341,333 348,327 348,317 357,310 357,305Z", "cx": 315.0, "cy": 311.1}, "SP": {"d": "M357,305 359,305 368,306 378,313 396,313 404,329 405,342 419,337 424,338 426,341 424,345 414,348 412,352 395,355 394,360 385,366 377,364 366,343 341,333 348,327 348,317 357,310Z", "cx": 379.8, "cy": 333.5}, "ES": {"d": "M476,293 479,294 478,313 471,321 470,327 463,329 455,323 455,316 460,316 466,306 466,294Z", "cx": 468.1, "cy": 310.7}, "RJ": {"d": "M455,323 443,334 424,338 426,341 424,345 450,345 453,340 463,337 463,329Z", "cx": 445.2, "cy": 336.2}, "PR": {"d": "M341,333 336,334 319,349 320,368 327,368 327,375 354,378 360,373 378,372 385,366 377,364 366,343Z", "cx": 347.1, "cy": 356.8}, "SC": {"d": "M378,372 360,373 354,378 327,375 324,386 343,386 365,397 368,406 371,406 377,398Z", "cx": 356.7, "cy": 384.2}, "RS": {"d": "M324,386 343,386 365,397 368,406 353,430 341,436 336,448 327,452 328,440 324,439 322,430 309,428 301,420 289,417 298,408 301,399 311,392 311,388Z", "cx": 330.7, "cy": 411.1}};
+const REG={"Norte":["AC","AM","AP","PA","RO","RR","TO"],"Nordeste":["MA","PI","CE","RN","PB","PE","AL","SE","BA"],"Centro-Oeste":["MT","MS","GO","DF"],"Sudeste":["MG","ES","RJ","SP"],"Sul":["PR","SC","RS"]};
+const COR={"Norte":"#E9B949","Nordeste":"#F2A65A","Centro-Oeste":"#F7D774","Sudeste":"#9FD3B6","Sul":"#8EBBE3"};
+const NOMES={AC:"Acre",AL:"Alagoas",AP:"Amapá",AM:"Amazonas",BA:"Bahia",CE:"Ceará",DF:"Distrito Federal",ES:"Espírito Santo",GO:"Goiás",MA:"Maranhão",MT:"Mato Grosso",MS:"Mato Grosso do Sul",MG:"Minas Gerais",PA:"Pará",PB:"Paraíba",PR:"Paraná",PE:"Pernambuco",PI:"Piauí",RJ:"Rio de Janeiro",RN:"Rio Grande do Norte",RS:"Rio Grande do Sul",RO:"Rondônia",RR:"Roraima",SC:"Santa Catarina",SP:"São Paulo",SE:"Sergipe",TO:"Tocantins"};
+const PEQ=["DF","RN","PB","PE","AL","SE","ES","RJ"];
+const ORDEM=["inicio","mapa","quiz","metodos","ajuda"];
+const $=s=>document.querySelector(s), NS="http://www.w3.org/2000/svg";
+const fmt=n=>n.toLocaleString("pt-BR");
+async function carregar(u){try{const r=await fetch(u);return r.ok?r.json():null}catch(e){return null}}
+
+(async()=>{
+  /* ---------- navegação ---------- */
+  const doca=$("#doca");
+  function rota(){
+    const id=(location.hash||"#inicio").slice(1), s=ORDEM.includes(id)?id:"inicio";
+    document.querySelectorAll(".sec").forEach(x=>x.classList.toggle("on",x.id===s));
+    doca.querySelectorAll("a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+s));
+    doca.classList.add("vis");
+    if(s==="inicio")setTimeout(()=>window.__contar&&window.__contar(),700);
+    scrollTo({top:0});
+  }
+  addEventListener("hashchange",rota); rota();
+
+  const C = window.__CONTEUDO || await carregar("data/conteudo.json");
+  const M = window.__MAPA || await carregar("data/mapa-brasil.json");
+  const S = await carregar("data/sinasc.json?v="+Date.now());
+  if(location.hash===""||location.hash==="#inicio")setTimeout(contar,700);
+  const regDe={}; Object.entries(REG).forEach(([r,l])=>l.forEach(u=>regDe[u]=r));
+
+  /* ---------- início ---------- */
+  $("#n-metodos").textContent=C.metodos.length;
+  $("#q-desc").textContent=C.mitos_verdades.length+" perguntas rápidas.";
+  // número em destaque: dado real se existir; senão o preliminar de 2024 divulgado pelo Ministério
+  let alvo=172857;
+  if(S){const ano=Object.keys(S.brasil).sort().pop(),d=S.brasil[ano];alvo=d.maes_11_14+d.maes_15_19;
+    $("#cont-txt").textContent=`bebês nasceram de mães de 11 a 19 anos no Brasil em ${ano}`;
+    $("#cont-fonte").textContent=`SINASC · Ministério da Saúde${d.status=="preliminar"?" · dado preliminar":""}`;}
+  let contou=false;
+  window.__contar=contar;
+  function contar(){ if(contou)return; contou=true; const el=$("#cont"),t0=performance.now(),dur=1800;
+    (function f(t){const k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,4);el.textContent=fmt(Math.round(alvo*e));if(k<1)requestAnimationFrame(f)})(t0);}
+  // minimapa vivo
+  const mini=$("#minimapa"), mp={};
+  Object.entries(M).forEach(([uf,p])=>{const pa=document.createElementNS(NS,"path");pa.setAttribute("d",p.d);pa.setAttribute("fill-rule","evenodd");mini.appendChild(pa);mp[uf]=pa});
+  const ufs=Object.keys(mp); let ant=[];
+  setInterval(()=>{ant.forEach(p=>p.classList.remove("aceso","aceso2"));
+    ant=[mp[ufs[Math.random()*ufs.length|0]],mp[ufs[Math.random()*ufs.length|0]]];
+    ant[0].classList.add("aceso"); ant[1].classList.add("aceso2");},1600);
+
+  /* ---------- mapa ---------- */
+  const svg=$("#mapa-svg");
+  Object.entries(M).forEach(([uf,p])=>{
+    const g=document.createElementNS(NS,"g"); g.setAttribute("class","est"+(PEQ.includes(uf)?" peq":"")); g.dataset.uf=uf;
+    const pa=document.createElementNS(NS,"path"); pa.setAttribute("d",p.d); pa.setAttribute("fill-rule","evenodd"); pa.setAttribute("fill",COR[regDe[uf]]);
+    const t=document.createElementNS(NS,"text"); t.setAttribute("x",p.cx); t.setAttribute("y",p.cy); t.textContent=uf;
+    g.append(pa,t);
+    g.onclick=()=>{svg.querySelectorAll(".sel").forEach(x=>x.classList.remove("sel")); svg.appendChild(g); requestAnimationFrame(()=>g.classList.add("sel"));
+      const o=document.createElementNS(NS,"path"); o.setAttribute("d",p.d); o.setAttribute("class","onda"); svg.appendChild(o); setTimeout(()=>o.remove(),850); painel(uf)};
+    svg.appendChild(g);
+  });
+  $("#leg").innerHTML=Object.keys(REG).map(r=>`<span><i style="background:${COR[r]}"></i>${r}</span>`).join("");
+  function painel(uf){
+    const p=$("#painel"), nome=uf?NOMES[uf]:"Brasil";
+    if(!S){p.innerHTML=`<div class="aviso">Os números oficiais deste estado estão sendo atualizados. Volte em breve.</div><div class="painel-uf">${nome}</div><div class="nums"><div><b>—</b><span>mães de 11 a 14 anos</span></div><div><b>—</b><span>mães de 15 a 19 anos</span></div></div>`;return}
+    const e=uf?S.estados[uf]:null, anos=e?e.anos:S.brasil, ult=Object.keys(anos).sort().pop(), d=anos[ult];
+    const pct=((d.maes_11_14+d.maes_15_19)/d.total*100).toFixed(1).replace(".",",");
+    p.innerHTML=`<div class="painel-uf">${nome} · ${ult}${d.status=="preliminar"?" (preliminar)":""}</div>
+      <div class="nums"><div><b>${fmt(d.maes_11_14)}</b><span>mães de 11 a 14 anos</span></div><div><b>${fmt(d.maes_15_19)}</b><span>mães de 15 a 19 anos</span></div></div>
+      <p style="margin-top:12px">${pct}% de todos os nascimentos foram de mães de 11 a 19 anos.</p>
+      <p class="fonte">Fonte: ${S.fonte}. Atualizado em ${S.atualizado_em.split("-").reverse().join("/")}.</p>`;
+  }
+  painel(null);
+
+  /* ---------- quiz ---------- */
+  let qi=0,acertos=0,hist=[];
+  function quiz(){
+    const tot=C.mitos_verdades.length,q=C.mitos_verdades[qi],b=$("#qbox");
+    const pts=Array.from({length:tot},(_,i)=>`<i class="${i<hist.length?(hist[i]?"f":"e"):(i===qi?"a":"")}"></i>`).join("");
+    if(!q){b.innerHTML=`<div class="pontos">${pts}</div><p class="frase">Você acertou ${acertos} de ${tot}.</p><button class="link" id="rq">Jogar de novo</button>`;$("#rq").onclick=()=>{qi=0;acertos=0;hist=[];quiz()};return}
+    b.innerHTML=`<div class="prog"><span>Pergunta ${qi+1} de ${tot}</span><span>${acertos} ${acertos===1?"acerto":"acertos"}</span></div><div class="pontos">${pts}</div>
+      <p class="frase">“${q.frase}”</p><div class="duo"><button data-v="0">Mito</button><button data-v="1">Verdade</button></div><div class="resp" id="r"></div>`;
+    b.querySelectorAll(".duo button").forEach(bt=>bt.onclick=()=>{
+      const ok=(bt.dataset.v==="1")===q.verdade; if(ok)acertos++; hist.push(ok);
+      bt.classList.add(ok?"ok":"no"); b.querySelectorAll(".duo button").forEach(x=>x.disabled=true);
+      const r=$("#r");r.className="resp on"+(ok?"":" err");
+      r.innerHTML=`<strong>${ok?"Isso!":"Não é bem assim."}</strong> É ${q.verdade?"verdade":"mito"}. ${q.explicacao}<br><button class="link" id="nx">${qi+1<tot?"Próxima pergunta":"Ver resultado"}</button>`;
+      $("#nx").onclick=()=>{qi++;quiz()};
+    });
+  }
+  quiz();
+
+  /* ---------- métodos ---------- */
+  $("#mdica").textContent=C.metodos_dica;
+  $("#mlista").innerHTML=C.metodos.map(m=>`<details><summary>${m.nome}</summary><p style="margin-top:8px">${m.como_funciona}</p>
+    <dl><dt>Eficácia</dt><dd>${m.eficacia_uso_tipico}</dd><dt>Duração</dt><dd>${m.duracao}</dd>
+    <dt>Protege de IST</dt><dd class="${m.protege_ist?"ist":""}">${m.protege_ist?"Sim":"Não"}</dd><dt>No SUS</dt><dd>${m.no_sus}</dd></dl></details>`).join("");
+
+
+  /* ---------- ajuda ---------- */
+  $("#alista").innerHTML=C.ajuda.map(a=>`<div><h3>${a.titulo}</h3><p>${a.texto}</p></div>`).join("");
+  $("#flista").innerHTML=C.fontes.map(f=>`<a href="${f.url}" target="_blank" rel="noopener">${f.titulo}</a>`).join("");
+
+})();
+</script>
+<script>if("serviceWorker" in navigator){addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}</script>
+</body>
+</html>
